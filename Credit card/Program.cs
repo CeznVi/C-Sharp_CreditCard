@@ -6,7 +6,21 @@ namespace Credit_card
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            CreditCard monoBank = new CreditCard();
+            monoBank.name = "Петро";
+            monoBank.surname = "Запорожець";
+            monoBank.bankName = "MonoBank";
+            monoBank.cardNum = 5433334498090202;
+            monoBank.SetMonth(1);
+            monoBank.SetYear(23);
+            monoBank.SetBalance(2.34f);
+            monoBank.Print();
+            monoBank.ToKnowCVV();
+            monoBank.ToKnowPincode();
+
+            Console.WriteLine("\n\nПриватна інформація");
+            monoBank.PrintPrivate();
+
         }
     }
 }
