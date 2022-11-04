@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -25,29 +26,25 @@ namespace Credit_card
         //конструктор без параметрів
         public CreditCard()
         {
-            
             balance = 0;
             cvv = SetCvv();
             pincode = SetPincode();
         }
 
         //Метод приватні генерації 
-        private int SetCvv()
+        static private int SetCvv()
         {
             Random rand = new Random();
             int c = rand.Next(100, 999);
             return c;
         }
-        private int SetPincode()
+        static private int SetPincode()
         {
            
             Random rand = new Random();
             int t = rand.Next(1000, 9999);           
             return t;
         }
-  
-
-
 
         //Cетери публічних полів
         public void SetMonth(int m)
@@ -101,7 +98,74 @@ namespace Credit_card
             Console.WriteLine($"Баланс на карті: {balance}");
             Console.WriteLine($"Власник: {name} {surname}");
         }
+        //Метод друку балансу по карті
+        public void PrintBalance()
+        {
+            Console.WriteLine($"Баланс на карті: {balance}");
+        }
 
+        ////Перевантаження операторів
+        //+ (для збільшення суми грошей на вказану кількість),
+        public static CreditCard operator +(CreditCard card, int i)
+        {
+            return new CreditCard() { balance = card.balance + i };
+        }
+        public static CreditCard operator +(CreditCard card, float f)
+        {
+            return new CreditCard() { balance = card.balance + f };
+        }
+        //– (для зменшення суми грошей на вказану кількість),
+        public static CreditCard operator -(CreditCard card, int i)
+        {
+            return new CreditCard() { balance = card.balance - i };
+        }
+        public static CreditCard operator -(CreditCard card, float f)
+        {
+            return new CreditCard() { balance = card.balance - f };
+        }
+        //== !=(перевірка на рівність CVV коду), Equals
+        public static bool operator ==(CreditCard card1, int cvv)
+        {
+            return (card1.cvv == cvv);
+        }
+        public static bool operator !=(CreditCard card1, int cvv)
+        {
+            return !(card1.cvv == cvv);
+        }
+        public bool Equals(CreditCard card1)
+        {
+            return (card1.balance == balance);
+        }
+        public override bool Equals(object obj)
+        {
+            return  (obj as CreditCard).balance == balance;
+        }
+
+        //< і > (перевірка на меншу чи більшу кількість суми грошей)
+        public static bool operator <(CreditCard card1, int balance)
+        {
+            return (card1.balance < balance);
+        }
+        public static bool operator >(CreditCard card1, int balance)
+        {
+            return (card1.balance > balance);
+        }
+        public static bool operator <(CreditCard card1, float balance)
+        {
+            return (card1.balance < balance);
+        }
+        public static bool operator >(CreditCard card1, float balance)
+        {
+            return (card1.balance > balance);
+        }
+        public static bool operator <(CreditCard card1, CreditCard card2)
+        {
+            return (card1.balance < card2.balance);
+        }
+        public static bool operator >(CreditCard card1, CreditCard card2)
+        {
+            return (card1.balance > card2.balance);
+        }
 
     }
 }
